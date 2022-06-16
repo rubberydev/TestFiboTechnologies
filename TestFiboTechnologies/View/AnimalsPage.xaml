@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="TestFiboTechnologies.View.AnimalsPage"
+    xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    NavigationPage.HasNavigationBar="True"
+    ios:Page.UseSafeArea="True">
+    <ContentPage.Content>
+        <StackLayout>
+          <ListView                 
+                HasUnevenRows="true" 
+                IsPullToRefreshEnabled="true"
+                IsRefreshing="False"
+                ItemsSource="{Binding Animals}"
+                SeparatorVisibility="None">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Frame
+                                BackgroundColor="LightGray"
+                                CornerRadius="20"
+                                HasShadow="true"
+                                Margin="5">
+                            <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SelectedAnimalCommand}"/>
+                                </Frame.GestureRecognizers>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <StackLayout 
+                                        Grid.Column="1"
+                                        VerticalOptions="Center">
+                                    <Label
+                                        FontSize="Large"
+                                        Grid.Column="0"
+                                        HeightRequest="50" 
+                                        HorizontalOptions="StartAndExpand" 
+                                        Text="{Binding KindOfCorral }" 
+                                        WidthRequest="100">
+                                </Label>
+                                    <Label 
+                                        FontAttributes="Bold"
+                                        FontSize="Medium" 
+                                        Text="{Binding Name}"
+                                        TextColor="Black">
+                                    </Label>
+                                    <Label 
+                                            Text="{Binding CantOfAnimals}"
+                                            TextColor="Black">
+                                    </Label>
+                                </StackLayout>
+                            </Grid>
+                        </Frame>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+            <Entry Text="{Binding Name}" Visual="Material"/>
+        <Button Margin="0" Text="Back to Add Animals and Corrals" Command="{Binding BackCommand}"  Visual="Material"/>
+
+    </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
