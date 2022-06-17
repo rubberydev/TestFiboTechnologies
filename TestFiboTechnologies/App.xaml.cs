@@ -13,9 +13,7 @@ namespace TestFiboTechnologies
         public App(IPlatformInitializer initializer)
             : base(initializer)
         {
-            InitializeComponent();
 
-            MainPage = new MainPage();
         }
 
         protected override async void OnInitialized()

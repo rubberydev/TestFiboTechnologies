@@ -54,22 +54,24 @@ namespace TestFiboTechnologies.ViewModels
             if (parameters.ContainsKey("Animals"))
             {
                 this.Animals = new ObservableCollection<Animals>(parameters.GetValue<IEnumerable<Animals>>("Animals"));
-                /*foreach (var item in this.Animals)
+
+                var auxAnimals = new ObservableCollection<Animals>();
+                foreach (var item in this.Animals)
                 {
                     if (string.IsNullOrEmpty(item.KindOfCorral))
                     {
                         var corral = await _dbService.GetCorralAsyncById(item.CharlesId);
 
                         item.KindOfCorral = corral.CategoryName;
-                        item.Name = item.Name;
-                        item.CantOfAnimals = item.CantOfAnimals;
-                        this.Animals = new ObservableCollection<Animals>();
-                        this.Animals.Add(item);
+                        
                     }
-                    
-                    
-                    
-                }*/
+                    item.Name = item.Name;
+                    item.CantOfAnimals = item.CantOfAnimals;
+                    auxAnimals.Add(item);
+                }
+
+                this.Animals = new ObservableCollection<Animals>();
+                this.Animals = auxAnimals;
                 
                 this.Name = $"{Animals.Select(a => a.Name).FirstOrDefault()} {Animals.Select(a => a.CantOfAnimals).FirstOrDefault()} ";
 

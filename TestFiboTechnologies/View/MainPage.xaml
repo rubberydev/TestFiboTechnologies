@@ -4,7 +4,8 @@
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="TestFiboTechnologies.MainPage"
-             NavigationPage.HasNavigationBar="True">
+             NavigationPage.HasNavigationBar="True"
+             Title="{Binding Title}">
 
 
        

@@ -4,6 +4,12 @@
              x:Class="TestFiboTechnologies.App"
              xmlns:prism="clr-namespace:Prism.Unity;assembly=Prism.Unity.Forms">
     <Application.Resources>
-       
+       <!-- Styles -->
+    <Style TargetType="NavigationPage">
+      <Setter Property="BarBackgroundColor" Value="DarkGray"/>
+      <!--  http://flounder.com/csharp_color_table.htm   -->
+      <Setter Property="BarTextColor" Value="White"/>
+    </Style>
+    <!-- Styles -->
     </Application.Resources>
 </prism:PrismApplication>
