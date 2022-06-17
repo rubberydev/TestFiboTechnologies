@@ -70,10 +70,10 @@ namespace TestFiboTechnologies.ViewModels
                     auxAnimals.Add(item);
                 }
 
-                this.Animals = new ObservableCollection<Animals>();
-                this.Animals = auxAnimals;
+                this.Animals = new ObservableCollection<Animals>(auxAnimals.OrderByDescending(a => a.CantOfAnimals));
                 
-                this.Name = $"{Animals.Select(a => a.Name).FirstOrDefault()} {Animals.Select(a => a.CantOfAnimals).FirstOrDefault()} ";
+                
+                //this.Name = $"{Animals.Select(a => a.Name).FirstOrDefault()} {Animals.Select(a => a.CantOfAnimals).FirstOrDefault()} ";
 
             }
         }
