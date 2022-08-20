@@ -14,7 +14,7 @@ namespace TestFiboTechnologies.Services
 
         public DbService()
         {
-            string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "TesFibo.db3");
+            string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "TestOIS.db3");
             database = new SQLiteAsyncConnection(dbPath);
             Initialize();
         }
@@ -26,7 +26,7 @@ namespace TestFiboTechnologies.Services
                 if (!initialized)
                 {
 
-                    database.CreateTableAsync<Animals>().Wait();
+                    database.CreateTableAsync<Users>().Wait();
                     database.CreateTableAsync<Charles>().Wait();
                     initialized = true;
                 }
@@ -36,39 +36,19 @@ namespace TestFiboTechnologies.Services
                 initialized = false;
             }
         }
-        #region Animals methods
-        public Task<List<Animals>> GetItemsAsync()=> database.Table<Animals>().ToListAsync();
+        #region Users methods
+        public Task<List<Users>> GetUsersAsync()=> database.Table<Users>().ToListAsync();
         
 
-        public Task<int> InsertItemAsync(Animals item)=>database.InsertAsync(item);
+        public Task<int> InsertUserAsync(Users item)=>database.InsertAsync(item);
         
 
-        public Task<int> UpdateItemAsync(Animals item)=>database.UpdateAsync(item);
+        public Task<int> UpdateUserAsync(Users item)=>database.UpdateAsync(item);
         
 
-        public Task<int> DeleteItemAsync(Animals item)=>database.DeleteAsync(item);
+        public Task<int> DeleteUserAsync(Users item)=>database.DeleteAsync(item);
         #endregion
 
-
-        #region Corrals methods
-        public Task<List<Charles>> GetCorralsAsync()=> database.Table<Charles>().ToListAsync();
-
-        /// <summary>
-        /// get corrals by relationship to know maximum capacity
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public Task<Charles> GetCorralAsyncById(int id)=>database.Table<Charles>().Where(i => i.ID == id).FirstOrDefaultAsync();
-        
-
-        public Task<int> InsertItemAsync(Charles item)=> database.InsertAsync(item);
-        
-
-        public Task<int> UpdateItemAsync(Charles item)=> database.UpdateAsync(item);
-        
-
-        public Task<int> DeleteItemAsync(Charles item)=>database.DeleteAsync(item);
-        #endregion
 
     }
 }

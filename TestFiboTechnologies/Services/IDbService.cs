@@ -7,14 +7,9 @@ namespace TestFiboTechnologies.Services
 {
     public interface IDbService
     {
-        Task<List<Animals>> GetItemsAsync();
-        Task<int> InsertItemAsync(Animals item);
-        Task<int> UpdateItemAsync(Animals item);
-        Task<int> DeleteItemAsync(Animals item);
-        Task<List<Charles>> GetCorralsAsync();
-        Task<Charles> GetCorralAsyncById(int id);
-        Task<int> InsertItemAsync(Charles item);
-        Task<int> UpdateItemAsync(Charles item);
-        Task<int> DeleteItemAsync(Charles item);
+        Task<List<Users>> GetUsersAsync();
+        Task<int> InsertUserAsync(Users item);
+        Task<int> UpdateUserAsync(Users item);
+        Task<int> DeleteUserAsync(Users item);
     }
 }

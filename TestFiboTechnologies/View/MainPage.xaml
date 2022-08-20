@@ -10,22 +10,26 @@
 
        
        <StackLayout Margin="40" VerticalOptions="StartAndExpand">
-            <Label Text="Kind of corral" />
-        <Entry Text="{Binding Kind,Mode=TwoWay}" Visual="Material"/>
-        <Label Text="Capacity maximun of animals" />
-        <Entry Keyboard="Numeric" Text="{Binding Capacity,Mode=TwoWay}" Visual="Material" />
+            <Label Text="User" />
+        <Entry Text="{Binding UserName,Mode=TwoWay}" Visual="Material"/>
+        <Label Text="Password" />
+        <Entry IsPassword="True"
+               Text="{Binding Password,Mode=TwoWay}"
+               Visual="Material" />
 
-        <Button Text="Save" Command="{Binding OnSaveCorralsCommand}"  Visual="Material"/>
+        <Button Text="Sing In" Command="{Binding OnSingInCommand}"  Visual="Material"/>
+        <Button Text="Sing Up" Command="{Binding OnSingUpCommand}"  Visual="Material"/>
+
 
        
-        <Label Text="Name of animal" />
+       <!-- <Label Text="Name of animal" />
         <Entry Text="{Binding Name}" Visual="Material"/>
         <Label Text="number of animals" />
         <Entry Text="{Binding CantOfAnimalsToEnterInCorral}" Visual="Material" />
         <Picker IsVisible="{Binding IsvisibleKindOfCorrals, Mode=TwoWay}" ItemDisplayBinding="{Binding CategoryName}" SelectedItem="{Binding CorralsSelected}" ItemsSource="{Binding Corrals}"/>
 
         <Button Text="Save" Command="{Binding OnSaveClicked}"  Visual="Material"/>
-        <Button Margin="0,60,0,0" Text="Report of Animals by amount" Command="{Binding NavigateCommand}"  Visual="Material"/>
+        <Button Margin="0,60,0,0" Text="Report of Animals by amount" Command="{Binding NavigateCommand}"  Visual="Material"/>-->
 
     </StackLayout>
 </ContentPage>

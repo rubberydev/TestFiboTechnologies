@@ -1,28 +1,22 @@
 ﻿using System;
-using System.Collections.ObjectModel;
-using System.Linq;
 using Prism.Commands;
 using Prism.Navigation;
 using Prism.Services;
 using TestFiboTechnologies.Models;
 using TestFiboTechnologies.Services;
-using TestFiboTechnologies.View;
 
 namespace TestFiboTechnologies.ViewModels
 {
-    public class MainPageViewModel : ViewModelBase, INavigatedAware
+    public class SingUpPageViewModel : ViewModelBase
     {
         private readonly INavigationService _navigationService;
         private readonly IPageDialogService _dialogService;
         private readonly IDbService _dbService;
-        private DelegateCommand _onSingInCommand;
-        private string _user_name;
-        private DelegateCommand _onSingUpCommand;
-        private bool _isvisibleKindOfCorrals;
-        private DelegateCommand _onSaveCorralsCommand;
-        private string _password;
-        private int _capacity;
-        private ObservableCollection<Charles> _corrals;
+        DelegateCommand _onSingUpCommand;
+        string _password;
+        string _user_name;
+        private string _confirm_user_name;
+        private string _confirmPassword;
 
         public string Password
         {
@@ -32,37 +26,32 @@ namespace TestFiboTechnologies.ViewModels
 
         public string UserName
         {
-            get =>this._user_name;
+            get => this._user_name;
             set => this.SetProperty(ref this._user_name, value);
         }
 
-       
-
-        public DelegateCommand OnSingInCommand => _onSingInCommand ?? (_onSingInCommand = new DelegateCommand(SingIn));
-
+        public string ConfirmPassword
+        {
+            get => this._confirmPassword;
+            set => this.SetProperty(ref this._confirmPassword, value);
+        }
         public DelegateCommand OnSingUpCommand => _onSingUpCommand ?? (_onSingUpCommand = new DelegateCommand(SingUp));
 
         
 
-        public MainPageViewModel(
+        public SingUpPageViewModel(
             INavigationService navigationService,
             IPageDialogService dialogService,
             IDbService dbService)
           : base(navigationService)
         {
-            this.Title = "Home Page";
+            this.Title = "Sing Up page";
             this._navigationService = navigationService;
             this._dialogService = dialogService;
             this._dbService = dbService;
         }
 
-        async void SingUp()=> await this._navigationService.NavigateAsync(nameof(SingUpPage));
-            
-        
-
-
-
-        private async void SingIn()
+        async void SingUp()
         {
             if (string.IsNullOrEmpty(this.UserName))
             {
@@ -75,6 +64,11 @@ namespace TestFiboTechnologies.ViewModels
                 await this._dialogService.DisplayAlertAsync("Error!", "You must enter a password", "OK");
                 return;
             }
+            if(this.Password.Trim() != this.ConfirmPassword.Trim())
+            {
+                await this._dialogService.DisplayAlertAsync("Error!", "the password not match... ", "OK");
+                return;
+            }
 
             var user = new Users();
             user.UserName = this.UserName;
@@ -82,22 +76,10 @@ namespace TestFiboTechnologies.ViewModels
 
             try
             {
-               var users = await this._dbService.GetUsersAsync();
-
-                var userExist = users.Where(u => u.UserName.Trim() == this.UserName.Trim()).FirstOrDefault();
-
-                if (userExist != null)
-                {
-                    await this._dialogService.DisplayAlertAsync("Success", "navigate success", "Ok");
-                    return;
-                    //navigate
-                }
-                else
-                {
-                    await this._dialogService.DisplayAlertAsync("Success", "you must sing up first, to singIn on this application", "Ok");
-                    return;
-
-                }
+               await this._dbService.InsertUserAsync(user);
+               await this._dialogService.DisplayAlertAsync("Success", "the user was store successfully :)", "Ok");
+               this.UserName = string.Empty;
+               this.Password = string.Empty;
 
             }
             catch (Exception ex)
@@ -105,8 +87,6 @@ namespace TestFiboTechnologies.ViewModels
                 await this._dialogService.DisplayAlertAsync("Error", "it was not possible to sing up the user please try again", "Ok");
                 return;
             }
-
         }
-
     }
 }

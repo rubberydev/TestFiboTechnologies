@@ -26,7 +26,7 @@ namespace TestFiboTechnologies
         {
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage,MainPageViewModel>();
-            containerRegistry.RegisterForNavigation<AnimalsPage, AnimalsPageViewModel>();
+            containerRegistry.RegisterForNavigation<SingUpPage, SingUpPageViewModel>();
             containerRegistry.Register<IDbService, DbService>();
         }
 
