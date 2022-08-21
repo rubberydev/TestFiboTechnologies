@@ -109,9 +109,13 @@ namespace TestFiboTechnologies.ViewModels
                         else
                         {
 
-                            await this._dialogService.DisplayAlertAsync("Success", "navigate success 1 :)", "Ok");
-                            return;
-                            //navigate to list of products
+                            var products = listOfProductsInLocalDataBase;
+                            var parameters = new NavigationParameters
+                            {
+                                { "products", products }
+                            };
+                            await this.NavigationService.NavigateAsync(nameof(ProductsPage), parameters);
+
                         }
                     }
                     else
@@ -148,17 +152,23 @@ namespace TestFiboTechnologies.ViewModels
                                 await this._dbService.InsertProductAsync(product);
                             }
 
-                            await this._dialogService.DisplayAlertAsync("Success", "navigate success 2 :)", "Ok");
-                            return;
-                            //navigate to list of products
-                            //and pass parameters
+                            var products = listOfProducts;
+                            var parameters = new NavigationParameters
+                            {
+                                { "products", products }
+                            };
+                            await this.NavigationService.NavigateAsync(nameof(ProductsPage), parameters);
+
                         }
                         else
                         {
-                            await this._dialogService.DisplayAlertAsync("Success", "navigate success 3 :)", "Ok");
-                            return;
-                            //navigate to list of products
-                            //and pass parameters
+                            var products = listOfProductsInLocalDataBase;
+                            var parameters = new NavigationParameters
+                            {
+                                { "products", products }
+                            };
+                            await this.NavigationService.NavigateAsync(nameof(ProductsPage), parameters);
+
                         }
                     }
 

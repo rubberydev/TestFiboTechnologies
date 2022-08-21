@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:prism="http://prismlibrary.com"
+    xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    x:Class="TestFiboTechnologies.View.ProductsPage"
+    Title="{Binding Title }">
+    <ContentPage.Content>
+    <StackLayout
+    Padding="10">
+        <ListView                 
+                HasUnevenRows="true" 
+                IsPullToRefreshEnabled="true"
+                IsRefreshing="False"
+                ItemsSource="{Binding Products}"
+                SeparatorVisibility="None">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Frame
+                            BackgroundColor="LightGray"
+                            CornerRadius="20"
+                            HasShadow="true"
+                            Margin="5">
+                           <Grid>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SelectCharacterCommand}"/>
+                                </Grid.GestureRecognizers>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <ff:CachedImage
+                                        CacheDuration="50"
+                                        Aspect="AspectFill"
+                                        RetryCount="3"
+                                        RetryDelay="800"
+                                        Grid.Column="0"
+                                        HeightRequest="50"
+                                        HorizontalOptions="StartAndExpand" 
+                                        Source="{Binding Image}" 
+                                        WidthRequest="100"/>
+                                <StackLayout 
+                                        Grid.Column="1"
+                                        VerticalOptions="Center">
+                                    <Label 
+                                            FontAttributes="Bold"
+                                            FontSize="Medium" 
+                                            Text="{Binding Title}"
+                                            TextColor="Black">
+                                    </Label>
+                                    <Label 
+                                            Text="{Binding Price}"
+                                            TextColor="Black"/>
+                                    <Label 
+                                            Text="{Binding Category}"
+                                            TextColor="Black"/>
+                                    </StackLayout>
+                                    <Image
+                                        Grid.Column="2"
+                                        HorizontalOptions="End" 
+                                        Source="ic_star"/>
+
+                               </Grid>
+                          </Frame>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+       </ListView>
+    </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

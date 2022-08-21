@@ -26,11 +26,13 @@ namespace TestFiboTechnologies
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.Register<IApiService, ApiService>();
+            containerRegistry.Register<IDbService, DbService>();
 
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage,MainPageViewModel>();
             containerRegistry.RegisterForNavigation<SingUpPage, SingUpPageViewModel>();
-            containerRegistry.Register<IDbService, DbService>();
+            containerRegistry.RegisterForNavigation<ProductsPage, ProductsPageViewModel>();
+            
         }
 
        
