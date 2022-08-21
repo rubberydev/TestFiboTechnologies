@@ -28,6 +28,9 @@ namespace TestFiboTechnologies.Services
 
                     database.CreateTableAsync<Users>().Wait();
                     database.CreateTableAsync<ProductsDbModel>().Wait();
+                    database.CreateTableAsync<RatingDbModel>().Wait();
+
+
                     initialized = true;
                 }
             }
@@ -37,16 +40,16 @@ namespace TestFiboTechnologies.Services
             }
         }
         #region Users methods
-        public Task<List<Users>> GetUsersAsync()=> database.Table<Users>().ToListAsync();
-        
+        public Task<List<Users>> GetUsersAsync() => database.Table<Users>().ToListAsync();
 
-        public Task<int> InsertUserAsync(Users item)=>database.InsertAsync(item);
-        
 
-        public Task<int> UpdateUserAsync(Users item)=>database.UpdateAsync(item);
-        
+        public Task<int> InsertUserAsync(Users item) => database.InsertAsync(item);
 
-        public Task<int> DeleteUserAsync(Users item)=>database.DeleteAsync(item);
+
+        public Task<int> UpdateUserAsync(Users item) => database.UpdateAsync(item);
+
+
+        public Task<int> DeleteUserAsync(Users item) => database.DeleteAsync(item);
         #endregion
 
         #region Products methods
@@ -63,5 +66,21 @@ namespace TestFiboTechnologies.Services
         #endregion
 
 
+        #region Rating methods
+        public Task<RatingDbModel> GetRatingAsync(int id) => database.Table<RatingDbModel>().Where(i => i.Id == id).FirstOrDefaultAsync();
+
+
+
+        public Task<int> InsertRatingAsync(RatingDbModel item) => database.InsertAsync(item);
+
+
+        public Task<int> UpdateRatingAsync(RatingDbModel item) => database.UpdateAsync(item);
+
+
+        public Task<int> DeleteRatingAsync(RatingDbModel item) => database.DeleteAsync(item);
+        #endregion
+
     }
 }
+
+

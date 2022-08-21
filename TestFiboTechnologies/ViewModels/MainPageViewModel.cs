@@ -98,31 +98,71 @@ namespace TestFiboTechnologies.ViewModels
                     var isConnected = ApiService.CheckConnection();
 
                     if (!isConnected)
-                        await this._dialogService.DisplayAlertAsync("Error", "You must turn on internet settings to get products from server", "Ok");
-
-
-                    string urlBase = Application.Current.Resources["urlBase"].ToString();
-                    string prefixService = Application.Current.Resources["prefixService"].ToString();
-                    var apiResponse = await this._apiService.Get<ProductsModel>(urlBase, prefixService);
-
-                    if(!apiResponse.IsSuccess)
                     {
-                        await this._dialogService.DisplayAlertAsync("Success", "it could not get the products list", "Ok");
-                        return;
+                        var listOfProductsInLocalDataBase = await this._dbService.GetProductsAsync();
+
+                        if (listOfProductsInLocalDataBase.Count == 0)
+                        {
+                            await this._dialogService.DisplayAlertAsync("Error", "You must turn on internet settings to get products from server", "Ok");
+                            return;
+                        }
+                        else
+                        {
+
+                            await this._dialogService.DisplayAlertAsync("Success", "navigate success 1 :)", "Ok");
+                            return;
+                            //navigate to list of products
+                        }
+                    }
+                    else
+                    {
+                        var listOfProductsInLocalDataBase = await this._dbService.GetProductsAsync();
+
+                        if (listOfProductsInLocalDataBase.Count == 0)
+                        {
+                            string urlBase = Application.Current.Resources["urlBase"].ToString();
+                            string prefixService = Application.Current.Resources["prefixService"].ToString();
+                            var apiResponse = await this._apiService.Get<ProductsModel>(urlBase, prefixService);
+
+                            if (!apiResponse.IsSuccess)
+                            {
+                                await this._dialogService.DisplayAlertAsync("Success", "it could not get the products list", "Ok");
+                                return;
+                            }
+
+                            var listOfProducts = (List<ProductsModel>)apiResponse.Result;
+                            var ratingDbmodel = new RatingDbModel();
+
+
+                            foreach (var product in listOfProducts)
+                            {
+                                ratingDbmodel.Rate = product.Rating.Rate;
+                                ratingDbmodel.Count = product.Rating.Count;
+                                ratingDbmodel.IdProduct = product.Id;
+                                await this._dbService.InsertRatingAsync(ratingDbmodel);
+
+                            }
+                            this.Products = new ObservableCollection<ProductsDbModel>(this.ToDbProducts(listOfProducts));
+                            foreach (var product in this.Products)
+                            {
+                                await this._dbService.InsertProductAsync(product);
+                            }
+
+                            await this._dialogService.DisplayAlertAsync("Success", "navigate success 2 :)", "Ok");
+                            return;
+                            //navigate to list of products
+                            //and pass parameters
+                        }
+                        else
+                        {
+                            await this._dialogService.DisplayAlertAsync("Success", "navigate success 3 :)", "Ok");
+                            return;
+                            //navigate to list of products
+                            //and pass parameters
+                        }
                     }
 
-                    
-                        var listOfProducts = (List<ProductsModel>)apiResponse.Result;
-                        this.Products = new ObservableCollection<ProductsDbModel>(this.ToDbProducts(listOfProducts));
-                        foreach (var product in this.Products)
-                        {
-                            await this._dbService.InsertProductAsync(product);
-                        }
 
-
-                        await this._dialogService.DisplayAlertAsync("Success", "navigate success :)", "Ok");
-                        return;
-                        //navigate to list of products
                 }
 
 
@@ -152,8 +192,7 @@ namespace TestFiboTechnologies.ViewModels
                 Price = p.Price,
                 Description = p.Description,
                 Category = p.Category,
-                Image = p.Image,
-                Rating = p.Rating,
+                Image = p.Image
 
             }).ToList();
         }

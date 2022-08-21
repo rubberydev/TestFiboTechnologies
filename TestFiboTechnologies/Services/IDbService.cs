@@ -15,5 +15,9 @@ namespace TestFiboTechnologies.Services
         Task<int> InsertProductAsync(ProductsDbModel item);
         Task<int> UpdateProductAsync(ProductsDbModel item);
         Task<int> DeleteProductAsync(ProductsDbModel item);
+        Task<RatingDbModel> GetRatingAsync(int id);
+        Task<int> InsertRatingAsync(RatingDbModel item);
+        Task<int> UpdateRatingAsync(RatingDbModel item);
+        Task<int> DeleteRatingAsync(RatingDbModel item);
     }
 }
