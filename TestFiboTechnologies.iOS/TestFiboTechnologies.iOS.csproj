@@ -134,6 +134,9 @@
     <PackageReference Include="Xamarin.Forms.Visual.Material">
       <Version>5.0.0.2478</Version>
     </PackageReference>
+    <PackageReference Include="Xamarin.FFImageLoading.Forms">
+      <Version>2.4.11.982</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
@@ -141,5 +144,8 @@
       <Project>{6B87C9A6-FB8A-4189-9135-C85DCA00B6B1}</Project>
       <Name>TestFiboTechnologies</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_star.png" />
   </ItemGroup>
 </Project>
