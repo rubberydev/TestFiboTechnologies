@@ -12,6 +12,7 @@ namespace TestFiboTechnologies.Models
         public string Description { get; set; }
         public string Category { get; set; }
         public Uri Image { get; set; }
+        public bool IsVisible { get; set; }
 
     }
 }

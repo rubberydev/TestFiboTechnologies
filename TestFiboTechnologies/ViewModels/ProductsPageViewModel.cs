@@ -19,6 +19,11 @@ namespace TestFiboTechnologies.ViewModels
             get=> this._products;
             set=>SetProperty(ref this._products, value);
         }
+        public ObservableCollection<ProductsDbModel> AuxProducts
+        {
+            get;
+            set;
+        }
 
         public ProductsPageViewModel(
             INavigationService navigationService,
@@ -32,17 +37,22 @@ namespace TestFiboTechnologies.ViewModels
             this._dbService = dbService;
         }
 
-        public override void OnNavigatedTo(INavigationParameters parameters)
+        public async override void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
 
             if (parameters.ContainsKey("products"))
             {
-                this.Products = new ObservableCollection<ProductsDbModel>(parameters.GetValue<IEnumerable<ProductsDbModel>>("products"));
+                this.AuxProducts = new ObservableCollection<ProductsDbModel>(parameters.GetValue<IEnumerable<ProductsDbModel>>("products"));
 
-
-                foreach (var product in this.Products)
+                this.Products = new ObservableCollection<ProductsDbModel>();
+                foreach (var product in this.AuxProducts)
                 {
+                    var ratingOfProduct = await this._dbService.GetRatingAsync((int)product.Id);
+
+                    if(ratingOfProduct.Rate >= 4.0) product.IsVisible = true;
+
+                    this.Products.Add(product);
 
                 }
 

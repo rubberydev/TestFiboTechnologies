@@ -47,19 +47,20 @@
                                         Grid.Column="1"
                                         VerticalOptions="Center">
                                     <Label 
-                                            FontAttributes="Bold"
-                                            FontSize="Medium" 
-                                            Text="{Binding Title}"
-                                            TextColor="Black">
+                                        FontAttributes="Bold"
+                                        FontSize="Medium" 
+                                        Text="{Binding Title}"
+                                        TextColor="Black">
                                     </Label>
                                     <Label 
-                                            Text="{Binding Price}"
-                                            TextColor="Black"/>
+                                        Text="{Binding Price, StringFormat='Price {0}'}"
+                                        TextColor="Black"/>
                                     <Label 
-                                            Text="{Binding Category}"
-                                            TextColor="Black"/>
+                                        Text="{Binding Category, StringFormat='Category {0}'}"
+                                        TextColor="Black"/>
                                     </StackLayout>
                                     <Image
+                                        IsVisible="{Binding IsVisible}"
                                         Grid.Column="2"
                                         HorizontalOptions="End" 
                                         Source="ic_star"/>
