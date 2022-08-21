@@ -3,7 +3,7 @@ using SQLite;
 
 namespace TestFiboTechnologies.Models
 {
-    public partial class ProductsDbModel
+    public class ProductsDbModel
     {
         [PrimaryKey, AutoIncrement]
         public long Id { get; set; }

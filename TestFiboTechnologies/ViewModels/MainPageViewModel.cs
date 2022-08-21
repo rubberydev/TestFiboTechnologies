@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Prism.Commands;
@@ -38,7 +39,7 @@ namespace TestFiboTechnologies.ViewModels
             set => this.SetProperty(ref this._user_name, value);
         }
 
-       
+        public ObservableCollection<ProductsDbModel> Products { get; set; }
 
         public DelegateCommand OnSingInCommand => _onSingInCommand ?? (_onSingInCommand = new DelegateCommand(SingIn));
 
@@ -109,10 +110,23 @@ namespace TestFiboTechnologies.ViewModels
                         await this._dialogService.DisplayAlertAsync("Success", "it could not get the products list", "Ok");
                         return;
                     }
-                    await this._dialogService.DisplayAlertAsync("Success", "navigate success :)", "Ok");
-                    return;
-                    //navigate
+
+                    
+                        var listOfProducts = (List<ProductsModel>)apiResponse.Result;
+                        this.Products = new ObservableCollection<ProductsDbModel>(this.ToDbProducts(listOfProducts));
+                        foreach (var product in this.Products)
+                        {
+                            await this._dbService.InsertProductAsync(product);
+                        }
+
+
+                        await this._dialogService.DisplayAlertAsync("Success", "navigate success :)", "Ok");
+                        return;
+                        //navigate to list of products
                 }
+
+
+                
                 else
                 {
                     await this._dialogService.DisplayAlertAsync("Success", "you must sing up first, to singIn on this application", "Ok");
@@ -129,5 +143,19 @@ namespace TestFiboTechnologies.ViewModels
 
         }
 
+        private IEnumerable<ProductsDbModel> ToDbProducts(List<ProductsModel> listOfProducts)
+        {
+            return listOfProducts.Select(p => new ProductsDbModel
+            {
+                Id = p.Id,
+                Title = p.Title,
+                Price = p.Price,
+                Description = p.Description,
+                Category = p.Category,
+                Image = p.Image,
+                Rating = p.Rating,
+
+            }).ToList();
+        }
     }
 }
