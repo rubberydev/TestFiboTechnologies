@@ -16,6 +16,7 @@
     <PackageReference Include="Prism.Unity.Forms" Version="8.1.97" />
     <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
     <PackageReference Include="Xamarin.Forms.Visual.Material" Version="5.0.0.2478" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Prism.Unity.Forms" />
@@ -25,6 +26,9 @@
     <None Remove="ViewModels\" />
     <None Remove="View\" />
     <None Remove="Xamarin.Forms.Visual.Material" />
+    <None Remove="Newtonsoft.Json" />
+    <None Remove="Flurl" />
+    <None Remove="Flurl.Http" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />

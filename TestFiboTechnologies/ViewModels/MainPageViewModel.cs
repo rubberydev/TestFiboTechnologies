@@ -7,14 +7,16 @@ using Prism.Services;
 using TestFiboTechnologies.Models;
 using TestFiboTechnologies.Services;
 using TestFiboTechnologies.View;
+using Xamarin.Forms;
 
 namespace TestFiboTechnologies.ViewModels
 {
     public class MainPageViewModel : ViewModelBase, INavigatedAware
     {
-        private readonly INavigationService _navigationService;
-        private readonly IPageDialogService _dialogService;
-        private readonly IDbService _dbService;
+        INavigationService _navigationService;
+        IPageDialogService _dialogService;
+        IDbService _dbService;
+        IApiService _apiService;
         private DelegateCommand _onSingInCommand;
         private string _user_name;
         private DelegateCommand _onSingUpCommand;
@@ -47,13 +49,15 @@ namespace TestFiboTechnologies.ViewModels
         public MainPageViewModel(
             INavigationService navigationService,
             IPageDialogService dialogService,
-            IDbService dbService)
+            IDbService dbService,
+            IApiService apiService)
           : base(navigationService)
         {
             this.Title = "Home Page";
             this._navigationService = navigationService;
             this._dialogService = dialogService;
             this._dbService = dbService;
+            this._apiService = apiService;
         }
 
         async void SingUp()=> await this._navigationService.NavigateAsync(nameof(SingUpPage));
@@ -84,11 +88,28 @@ namespace TestFiboTechnologies.ViewModels
             {
                var users = await this._dbService.GetUsersAsync();
 
-                var userExist = users.Where(u => u.UserName.Trim() == this.UserName.Trim()).FirstOrDefault();
+                var userExist = users.Where(u => u.UserName.Trim() == this.UserName.Trim() && u.Password.Trim() == this.Password.Trim()).FirstOrDefault();
 
                 if (userExist != null)
                 {
-                    await this._dialogService.DisplayAlertAsync("Success", "navigate success", "Ok");
+                    ApiService apiService = new ApiService();
+
+                    var isConnected = ApiService.CheckConnection();
+
+                    if (!isConnected)
+                        await this._dialogService.DisplayAlertAsync("Error", "You must turn on internet settings to get products from server", "Ok");
+
+
+                    string urlBase = Application.Current.Resources["urlBase"].ToString();
+                    string prefixService = Application.Current.Resources["prefixService"].ToString();
+                    var apiResponse = await this._apiService.Get<ProductsModel>(urlBase, prefixService);
+
+                    if(!apiResponse.IsSuccess)
+                    {
+                        await this._dialogService.DisplayAlertAsync("Success", "it could not get the products list", "Ok");
+                        return;
+                    }
+                    await this._dialogService.DisplayAlertAsync("Success", "navigate success :)", "Ok");
                     return;
                     //navigate
                 }
@@ -102,7 +123,7 @@ namespace TestFiboTechnologies.ViewModels
             }
             catch (Exception ex)
             {
-                await this._dialogService.DisplayAlertAsync("Error", "it was not possible to sing up the user please try again", "Ok");
+                await this._dialogService.DisplayAlertAsync("Error", ex.Message, "Ok");
                 return;
             }
 

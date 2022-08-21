@@ -4,6 +4,7 @@ using Prism.Unity;
 using TestFiboTechnologies.Services;
 using TestFiboTechnologies.View;
 using TestFiboTechnologies.ViewModels;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace TestFiboTechnologies
@@ -24,6 +25,8 @@ namespace TestFiboTechnologies
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.Register<IApiService, ApiService>();
+
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage,MainPageViewModel>();
             containerRegistry.RegisterForNavigation<SingUpPage, SingUpPageViewModel>();

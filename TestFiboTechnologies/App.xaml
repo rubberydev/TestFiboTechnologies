@@ -10,6 +10,8 @@
       <!--  http://flounder.com/csharp_color_table.htm   -->
       <Setter Property="BarTextColor" Value="White"/>
     </Style>
-    <!-- Styles -->
+    <!-- Uri Resources -->
+        <x:String  x:Key="prefixService">/products</x:String>
+        <x:String  x:Key="urlBase">https://fakestoreapi.com</x:String>
     </Application.Resources>
 </prism:PrismApplication>

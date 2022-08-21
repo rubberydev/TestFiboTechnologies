@@ -66,7 +66,7 @@ namespace TestFiboTechnologies.ViewModels
             }
             if(this.Password.Trim() != this.ConfirmPassword.Trim())
             {
-                await this._dialogService.DisplayAlertAsync("Error!", "the password not match... ", "OK");
+                await this._dialogService.DisplayAlertAsync("Error!", "the passwords does not match... ", "OK");
                 return;
             }
 
@@ -80,6 +80,7 @@ namespace TestFiboTechnologies.ViewModels
                await this._dialogService.DisplayAlertAsync("Success", "the user was store successfully :)", "Ok");
                this.UserName = string.Empty;
                this.Password = string.Empty;
+                this.ConfirmPassword = string.Empty;
 
             }
             catch (Exception ex)
