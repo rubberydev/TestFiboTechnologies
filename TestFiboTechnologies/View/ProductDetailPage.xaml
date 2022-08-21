@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:prism="http://prismlibrary.com"
+    xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    x:Class="TestFiboTechnologies.View.ProductDetailPage"
+    Title="{Binding Title}">
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid>
+               <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition  Height="450"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+                         <Label
+                            FontSize="Micro"
+                            FontAttributes="Bold"
+                            HorizontalOptions="CenterAndExpand"
+                            Grid.Row="0"
+                            Text="{Binding NameProduct}"/>
+                      <ff:CachedImage
+                            CacheDuration="50"
+                            Aspect="AspectFill"
+                            BindingContext="{Binding Product}"
+                            Grid.Row="1"
+                            Source="{Binding Image}"
+                            HorizontalOptions="Center"
+                            WidthRequest="320"
+                            VerticalOptions="CenterAndExpand"/>
+                      <Label
+                            FontAttributes="Italic"
+                            HorizontalOptions="CenterAndExpand"
+                            Grid.Row="2"
+                            Text="{Binding Rating}"/>
+                      <Label
+                            FontAttributes="Bold"
+                            HorizontalOptions="CenterAndExpand"
+                            Grid.Row="3"
+                            Text="{Binding Price}"/>
+                      <Label
+                            FontAttributes="Italic"
+                            HorizontalOptions="CenterAndExpand"
+                            Grid.Row="4"
+                            Text="{Binding Category}"/>
+            </Grid>
+    </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

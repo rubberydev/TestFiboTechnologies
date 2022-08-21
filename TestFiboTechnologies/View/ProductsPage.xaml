@@ -26,7 +26,7 @@
                             Margin="5">
                            <Grid>
                                 <Grid.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding SelectCharacterCommand}"/>
+                                    <TapGestureRecognizer Command="{Binding SelectProductCommand}"/>
                                 </Grid.GestureRecognizers>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
