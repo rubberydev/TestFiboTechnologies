@@ -64,6 +64,12 @@ namespace TestFiboTechnologies.ViewModels
                 await this._dialogService.DisplayAlertAsync("Error!", "You must enter a password", "OK");
                 return;
             }
+
+            if(this.Password.Length <= 5)
+            {
+                await this._dialogService.DisplayAlertAsync("Error!", "Your password must contain at least 6 characters", "OK");
+                return;
+            }
             if(this.Password.Trim() != this.ConfirmPassword.Trim())
             {
                 await this._dialogService.DisplayAlertAsync("Error!", "the passwords does not match... ", "OK");
@@ -78,10 +84,11 @@ namespace TestFiboTechnologies.ViewModels
             {
                await this._dbService.InsertUserAsync(user);
                await this._dialogService.DisplayAlertAsync("Success", "the user was store successfully :)", "Ok");
+                
                this.UserName = string.Empty;
                this.Password = string.Empty;
                 this.ConfirmPassword = string.Empty;
-
+                await this._navigationService.GoBackAsync();
             }
             catch (Exception ex)
             {

@@ -27,7 +27,7 @@ namespace TestFiboTechnologies.Services
                 {
 
                     database.CreateTableAsync<Users>().Wait();
-                    database.CreateTableAsync<Charles>().Wait();
+                    database.CreateTableAsync<ProductsDbModel>().Wait();
                     initialized = true;
                 }
             }
@@ -47,6 +47,19 @@ namespace TestFiboTechnologies.Services
         
 
         public Task<int> DeleteUserAsync(Users item)=>database.DeleteAsync(item);
+        #endregion
+
+        #region Products methods
+        public Task<List<ProductsDbModel>> GetProductsAsync() => database.Table<ProductsDbModel>().ToListAsync();
+
+
+        public Task<int> InsertProductAsync(ProductsDbModel item) => database.InsertAsync(item);
+
+
+        public Task<int> UpdateProductAsync(ProductsDbModel item) => database.UpdateAsync(item);
+
+
+        public Task<int> DeleteProductAsync(ProductsDbModel item) => database.DeleteAsync(item);
         #endregion
 
 
